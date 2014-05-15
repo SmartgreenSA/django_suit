@@ -1,5 +1,6 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_static %}
+<!-- Extende suit_menu para ordenar -->
+{% load i18n admin_static suit_menu %}
 
 {% block extrastyle %}
   {{ block.super }}
@@ -14,7 +15,8 @@
 {% block content %}
   <div id="content-main">
     {% if app_list %}
-      {% for app in app_list %}
+	<!-- Utiliza template filter para ordenar lista de apps -->
+        {% for app in app_list|re_menu %}
         <div class="module">
           <table class="table-overview applist" summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
             <caption><a href="{{ app.app_url }}" class="section">{% trans app.name %}</a></caption>

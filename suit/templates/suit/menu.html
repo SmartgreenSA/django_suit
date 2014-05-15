@@ -14,7 +14,8 @@
 
     {% get_menu request as app_list %}
     {% if app_list %}
-      {% for app in app_list %}
+      <!-- Utiliza template filter para ordenar as apps -->
+      {% for app in app_list|re_menu %}
         {% if app.separator %}
           <li class="separator"></li>
         {% else %}

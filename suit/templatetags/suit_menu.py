@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.core.handlers.wsgi import WSGIRequest
@@ -15,6 +16,33 @@ from suit.config import get_config
 
 register = template.Library()
 
+# Template filter custom order apps menu/content
+@register.filter(name='re_menu')
+def re_menu(menu):
+    """
+        Template filter para ordenar apps
+
+	Re-ordena as aps em menu/content com base na
+	constante recuperada em settings.py da SUITE SG
+    """
+    ADMIN_REORDER = getattr(settings, 'ADMIN_REORDER', None)
+    re_menu = []
+    if ADMIN_REORDER:
+        for i in ADMIN_REORDER:
+            for m in menu:
+                re_model = []
+                for mo in i[1]:
+                    for mod in m['models']:
+                        if 'object_name' in mod and mod['object_name'] == mo:
+                            re_model.append(mod)
+                        elif 'name' in mod and mod['name'] == mo.lower():
+                            re_model.append(mod)
+                if len(re_model) > 0:
+                    me = m
+                    me['models'] = re_model
+                    re_menu.append(me)
+        return re_menu
+    return menu
 
 @register.assignment_tag(takes_context=True)
 def get_menu(context, request):
