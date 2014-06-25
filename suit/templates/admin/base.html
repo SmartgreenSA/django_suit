@@ -35,7 +35,7 @@
           <!-- Header -->
           <div id="header" class="header">
             <div id="branding">
-              <a href="{% url 'admin:index' %}"><h1 id="site-name">SmartGreen - Suite</h1></a>
+              <a href="{% url 'admin:index' %}"><h1 id="site-name">SmartGreen - {{ 'ADMIN_NAME'|suit_conf }}</h1></a>
             </div>
 
             {% block header_time %}
@@ -184,7 +184,7 @@
 
       <div class="copyright">
         {% block copyright %}
-          Copyright &copy; 2014 Suite<br>Desenvolvido por <a href="http://smartgreen.net/" target="_blank">smartgreen.net</a>
+          Copyright &copy; {{ 'YEAR'|suit_conf }} {{ 'ADMIN_NAME'|suit_conf }}<br>Desenvolvido por <a href="http://smartgreen.net/" target="_blank">smartgreen.net</a>
         {% endblock %}
       </div>
 
