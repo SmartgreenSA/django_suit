@@ -35,6 +35,12 @@ def re_menu(menu):
                     for mod in m['models']:
                         if 'object_name' in mod and mod['object_name'] == mo:
                             re_model.append(mod)
+                        elif 'name' in mod:
+                            name = mod['name'].split('.')
+                            if len(name) > 0:
+                                for n in name:
+                                    if n == mo.lower():
+                                        re_model.append(mod)
                         elif 'name' in mod and mod['name'] == mo.lower():
                             re_model.append(mod)
                 if len(re_model) > 0:
